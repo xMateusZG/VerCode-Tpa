@@ -1,0 +1,42 @@
+name: VerCode-TPA
+version: '1.0-SNAPSHOT'
+main: pl.verCodeTPA.Main
+api-version: '1.18'
+load: STARTUP
+authors: [ xMateusZG ]
+description: VerCode.pl | Plugin na tpa, jak z anarchii
+website: dc.vercode.pl
+
+commands:
+  tpa:
+    description: Wyślij prośbę o teleportację
+    usage: /tpa <gracz>
+  tpaaccept:
+    description: Zaakceptuj prośbę o teleportację
+    usage: /tpaaccept <nick / * / nic>
+    permission: vercode.tpa.accept
+  tpadeny:
+    description: Odrzuć prośbę o teleportację
+    usage: /tpadeny <nick / * / nic>
+    permission: vercode.tpa.deny
+
+permissions:
+  vercode.tpa.*:
+    description: Pełny dostęp do TPA
+    children:
+      vercode.tpa.use: true
+      vercode.tpa.accept: true
+      vercode.tpa.deny: true
+      vercode.tpa.teleport.speed: true
+  vercode.tpa.use:
+    description: Używanie /tpa
+    default: true
+  vercode.tpa.accept:
+    description: Akceptowanie próśb
+    default: true
+  vercode.tpa.deny:
+    description: Odrzucanie próśb
+    default: true
+  vercode.tpa.teleport.speed:
+    description: Szybsza teleportacja
+    default: op

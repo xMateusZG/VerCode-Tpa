@@ -1,0 +1,126 @@
+##################################################################
+#        VerCode | Wejdź w śiat nowoczesnej technologii!         #
+#          VerCode-TPA | Plugin na TPA, jak z anarchii           #
+#                Plik configuracyjny: config.yml                 #
+#                                                                #
+#                    Autor pluginu: xMateusZG                    #
+##################################################################
+
+# {prefix} - prefix wiadomosci
+# {player} - gracz poboczny (np. który otrzymał prośbe o teleportacje)
+# {sending_player} - gracz głowny (np. osoba która wysyła prośbe o teleportacje)
+# {active_requests} - aktywne prośby o teleportacje
+# {time_teleportation} - czas teleportacji
+
+# Opcje
+options:
+  # Prefix (Zmienna: {prefix}
+  prefix: "&8[&3VerCode &7| &bTPA&8|&r "
+
+  # Czas trwania teleportacji
+  teleportation_duration:
+    # Dla gracza (s = sekundy, m = minuty, zalecany s)
+    player: 5s
+    # Gracza z permisją (vercode.tpa.teleport.speed, OP)
+    permission: 1s
+
+  # Zablokowane światy (Zostaw puste jeżeli chcesz wyłączyć tę opcję)
+  locked_worlds: [test1, test2]
+
+  # Czy gracz ma teleportować się w miejsce gdzie stoi gracz (true),
+  # lub czy gracz ma teleportować w miejsce w którym stał poprzedni gracz
+  # czyli np. jak gracz który teleportował danego gracza się ruszy to on
+  # przeteleportuje się w miejsce w którym stał wcześniej podczas akceptacji (false)
+  teleport_player_location: false
+
+  # Dźwięki pluginu
+  sounds:
+    tpa_send: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    tpa_receive: "ENTITY_PLAYER_LEVELUP"
+    accept: "UI_TOAST_CHALLENGE_COMPLETE"
+    deny: "BLOCK_NOTE_BLOCK_BASS"
+    cancel: "ENTITY_VILLAGER_NO"
+    teleport: "ENTITY_ENDERMAN_TELEPORT"
+
+# Wiadomosci dla teleportacji
+messages_teleportation:
+  sending_request:
+    chat:
+      - ""
+      - ""
+      - "{prefix} &aWysłałeś prośbe o teleportacje"
+      - " &adla gracza: &2{player}&a!"
+      - ""
+      - " &eWpisz: &6&n/tpadeny <nick / * / nic>&e,"
+      - " &eaby odwołać prośbę!"
+
+    title:
+      title: "&8[&2🔥&8] &aTELEPORTACJA &8[&2🔥&8]"
+      subtitle: "&eWysłano prośbe o teleportacje!"
+      # Czas trwania title
+      message_duration: 5s
+
+  # Otrzymanie prośby o teleportacje
+  receiving_request_teleportation:
+    chat:
+      - ""
+      - ""
+      - "{prefix} &aOtrzymałeś prośbe o teleportacje!"
+      - " &aod gracza: &2{sending_player}"
+      - ""
+      - " &eAby zaakceptować wpisz: &6/tpaaccept <nick / * / nic>&e!"
+      - " &elub kliknij: {button1}&e / {button2}&e!"
+
+    bossbar:
+      message: "&aOtrzymałeś prośbę o teleportacje od: &2&n{player}&a. &c[Aktywne prośby: {active_requests}]"
+      # Kolor (Wpisuj: Nazwe koloru np: blue, lub &{liczba}.
+      # Mozesz rówież zrobić animacje: [kolor1, kolor2....]
+      color: [BLUE, AQUA]
+      # Czas w którym czasie zmieniają sie kolory (Najlepiej podawać w sekundach = s
+      # lub milisekundach = mm, jezeli masz 1 kolor wpisz: false]
+      color_changing_time: 10mm
+
+  # Zaakcepotwanie teleportacji
+  accepting_request:
+    chat:
+      - ""
+      - ""
+      - "{prefix} &aZaakceptowałeś prośbe o teleportacje!"
+      - " &aod gracza: {player}"
+    title: "&8[&2🔥&8] &aTELEPORTACJA &8[&2🔥&8]"
+    subtitle: "&anastąpi za: {time_teleportation}!"
+
+  # Odrzucenie teleportacji
+  rejection_request:
+    chat:
+      - ""
+      - ""
+      - "{prefix} &cOdrzuciłeś prośbe o teleportacje!"
+      - " &aod gracza: {player}"
+
+  # Przerwanie teleportacji gdy gracz się poruszy z bloku na którym stoi (nie kamerą)
+  after_moving:
+    title: "&8[&2🔥&8] &aTELEPORTACJA &8[&2🔥&8]"
+    subtitle: "&cprzerwana! Poruszyłeś się "
+
+# Przysiski (Możesz dodawać swoje
+buttons:
+  # Akceptacji
+  accept:
+    # Zmienna
+    variable: {button1}
+    # Text tej go przysisku
+    text: "&2&l[✔]"
+    # Komenda jaka się wykonuje gdy kliknie sie na wiadomośc (guzik)
+    command_executes:
+      - tpaaccept {player}
+
+  # Odrzucenia
+  deny:
+    # Zmienna
+    variable: {button2}
+    # Text tej go przysisku
+    text: "&3&l[❌]"
+    # Komenda jaka się wykonuje gdy kliknie sie na wiadomośc (guzik)
+    command_executes:
+      - tpadeny {player}
